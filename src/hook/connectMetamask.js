@@ -104,6 +104,10 @@ export const MetamaskContextProvider = ({ children }) => {
     const tx  = await presaleContract.totalSupply();
     setTotaSupply(Number(tx.toString()))
   };
+  const getUserInvestBalance = async (address) => {
+    const tx = await presaleContract.getUserInvestBalance(address)
+    setUserInvestBalance(Number(tx.toString()))
+  }
   const getTotalInvest = async () => {
     const tx = await presaleContract.totalInvest();
     setTotalInvest(Number(tx.toString()))
@@ -156,8 +160,8 @@ export const MetamaskContextProvider = ({ children }) => {
 
     getTotalSupply()
     console.log("totalSupply: ", totalSupply);
-
-  //   console.log("userInvestBalance: ", userInvestBalance);
+    getUserInvestBalance(defaultAccount)
+    console.log("userInvestBalance: ", userInvestBalance);
   //   console.log("finish");
 }
   },[usdcContract]);

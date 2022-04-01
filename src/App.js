@@ -197,8 +197,8 @@ const App = () => {
               Choisissez votre devise :
             </Text>
             <Select placeholder="Select a stable coin">
-              <option value="option1">USDT</option>
-              <option value="option2">USDC</option>
+              <option value={0}>USDC</option>
+              <option value={1}>USDT</option>
             </Select>
           </Flex>
           <Flex mt="10px" maxW="98%">
@@ -253,7 +253,8 @@ const App = () => {
           >
             <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
             <Text fontSize={20} fontWeight="medium" color="teal">
-              Balance : {userBalance}
+              Balance : {usdcBalance}
+              Balance : {usdtBalance}
             </Text>
           </Box>
           <Box
@@ -269,7 +270,7 @@ const App = () => {
           >
             <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
             <Text fontSize={20} fontWeight="medium" color="teal">
-              Monstant investi : {userBalance}
+              Monstant investi : {userInvestBalance}
             </Text>
           </Box>
         </Flex>
@@ -352,7 +353,7 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                20% du balance
+              {(tbioBalance/5)} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -366,7 +367,7 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                20% du balance
+              {(tbioBalance/5)} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -380,7 +381,7 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                20% du balance
+               {(tbioBalance/5)} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -394,7 +395,7 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                20% du balance
+              {(tbioBalance/5)} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -408,7 +409,7 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                20% du balance
+              {(tbioBalance/5)} 20% du balance
               </Text>
             </Box>
           </Box>
