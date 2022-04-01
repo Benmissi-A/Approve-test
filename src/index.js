@@ -8,9 +8,7 @@ import { MetamaskContextProvider } from "./hook/connectMetamask";
 ReactDOM.render(
   <React.StrictMode>
     <MetamaskContextProvider>
-      {/* <ContractContextProvider> */}
         <App />
-      {/*  </ContractContextProvider>*/}
    </MetamaskContextProvider> 
   </React.StrictMode>,
   document.getElementById("root")

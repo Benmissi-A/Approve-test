@@ -58,7 +58,7 @@ const App = () => {
   const handleChange = (value) => setValue(value);
   const handleResize = () => {
     setWidth(window.innerWidth);
-    console.log(width);
+    console.log('largeur ecran', width);
   };
   useEffect(() => {
     handleResize();
@@ -88,15 +88,15 @@ const App = () => {
       console.log("handleClickBuy", e.message);
     }
   };
-  console.log("userBalance",userBalance,
-    "usdcBalance",usdcBalance,
-    "usdtBalance",usdtBalance,
-    "usdcAllowance",usdcAllowance,
-    "usdtAllowance",usdtAllowance,
-    "tbioBalance",tbioBalance,
-    "totalInvest",totalInvest,
-    "totalSupply",totalSupply,
-    "userInvestBalance",userInvestBalance)
+  // console.log("userBalance",userBalance,
+  //   "usdcBalance",usdcBalance,
+  //   "usdtBalance",usdtBalance,
+  //   "usdcAllowance",usdcAllowance,
+  //   "usdtAllowance",usdtAllowance,
+  //   "tbioBalance",tbioBalance,
+  //   "totalInvest",totalInvest,
+  //   "totalSupply",totalSupply,
+  //   "userInvestBalance",userInvestBalance)
 
   return (
     <>
@@ -162,7 +162,7 @@ const App = () => {
             Nombre de $TBIO restant
           </Text>
           <Text fontSize={22} fontWeight="extrabold" color="#fff">
-            10.000.000/15.000.000 $TBIO
+            {totalSupply}/15.000.000 $TBIO
           </Text>
         </Flex>
         <Box mt="10px">

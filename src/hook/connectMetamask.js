@@ -77,35 +77,36 @@ export const MetamaskContextProvider = ({ children }) => {
   };
   const balanceOfUsdc = async (address) => {
     const tx = await usdcContract.balanceOf(address);
-    // await tx.wait();
-    // console.log('tx minned: ')
-    // console.log(tx);
-    setUsdcBalance(tx.toString());
-    console.log("tx Usdc", tx)
+    setUsdcBalance(Number(tx.toString()));
+    console.log("tx Usdc", tx);
   };
   const balanceOfUsdt = async (address) => {
-    await usdtContract.balanceOf(address);
-    setUsdtBalance(tx.toString());
-    console.log("tx Usdt", tx)
+    const tx = await usdtContract.balanceOf(address);
+    setUsdtBalance(Number(tx.toString()));
+    console.log("tx Usdt", tx);
   };
   const allowanceUsdc = async (address) => {
-   const tx = await usdcContract.allowance(address);
-   setUsdcAllowance(tx.toString());
-    console.log("tx Usdt A", tx)
+    const tx = await usdcContract.allowance(address,);
+    setUsdcAllowance(Number(tx.toString()));
+    console.log("tx Usdt A", tx);
   };
   const allowanceUsdt = async (address) => {
-    await usdtContract.allowance(address);
+    const tx = await usdtContract.allowance(address);
+    setUsdtAllowance(Number(tx.toString()));
   };
   //PRESALE FUNCTIONS
 
   const getTbioBalance = async (address) => {
-    await presaleContract.getUserBalance(address);
+    const tx = await presaleContract.getUserBalance(address);
+    setTbioBalance(Number(tx.toString()))
   };
   const getTotalSupply = async () => {
-    await presaleContract.totalSupply();
+    const tx  = await presaleContract.totalSupply();
+    setTotaSupply(Number(tx.toString()))
   };
   const getTotalInvest = async () => {
-    await presaleContract.totalInvest();
+    const tx = await presaleContract.totalInvest();
+    setTotalInvest(Number(tx.toString()))
   };
   const deposit = async (amount, nb) => {
     await presaleContract.buyTbio(amount, nb);
@@ -124,18 +125,18 @@ export const MetamaskContextProvider = ({ children }) => {
     await presaleContract.banFromWhiteList(address);
   };
 
-  useEffect(() => {
-    console.log("signer", signer);
-    console.log(
-      "UsdcContract",
-      usdcContract,
-      "UsdtContract",
-      usdtContract,
-      "PresaleContract",
-      presaleContract
-    );
-    console.log("errorMessage", errorMessage);
-  }, [signer, errorMessage, usdcContract, usdtContract, presaleContract]);
+  // useEffect(() => {
+  //   console.log("signer", signer);
+  //   console.log(
+  //     "UsdcContract",
+  //     usdcContract,
+  //     "UsdtContract",
+  //     usdtContract,
+  //     "PresaleContract",
+  //     presaleContract
+  //   );
+  //   console.log("errorMessage", errorMessage);
+  // }, [signer, errorMessage, usdcContract, usdtContract, presaleContract]);
 
   const getUserBalance = (address) => {
     window.ethereum
@@ -146,15 +147,31 @@ export const MetamaskContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    console.log("defaultAccount: ",defaultAccount)
+   if (defaultAccount){ 
+    console.log("defaultAccount: ", defaultAccount);
     balanceOfUsdc(defaultAccount);
-    console.log('usdc: ', usdcBalance)
+    console.log("usdc: ", usdcBalance);
     balanceOfUsdt(defaultAccount);
-    console.log('usd: ', usdtBalance)
-    balanceOfUsdc(defaultAccount);
-    console.log('usdc: ', usdcBalance)
-    console.log("finish");
-  });
+    console.log("usdt: ", usdtBalance);
+    
+    //   allowanceUsdc(defaultAccount)
+    //   console.log("usdcAllowance: ", usdcAllowance);
+  //   allowanceUsdt(defaultAccount)
+  //   console.log("usdtAllowance: ", usdtAllowance);
+
+    getTbioBalance(defaultAccount)
+    console.log("tbioBalance: ", tbioBalance);
+
+    getTotalInvest()
+    console.log("totalInvest: ", totalInvest);
+
+    getTotalSupply()
+    console.log("totalSupply: ", totalSupply);
+
+  //   console.log("userInvestBalance: ", userInvestBalance);
+  //   console.log("finish");
+}
+  },[usdcContract]);
   //   setUsdcBalance(res)
   //   console.log('usdcBalance: ',res)
   // },[usdcContract])
