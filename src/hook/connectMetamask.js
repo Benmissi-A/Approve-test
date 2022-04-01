@@ -125,18 +125,7 @@ export const MetamaskContextProvider = ({ children }) => {
     await presaleContract.banFromWhiteList(address);
   };
 
-  // useEffect(() => {
-  //   console.log("signer", signer);
-  //   console.log(
-  //     "UsdcContract",
-  //     usdcContract,
-  //     "UsdtContract",
-  //     usdtContract,
-  //     "PresaleContract",
-  //     presaleContract
-  //   );
-  //   console.log("errorMessage", errorMessage);
-  // }, [signer, errorMessage, usdcContract, usdtContract, presaleContract]);
+
 
   const getUserBalance = (address) => {
     window.ethereum
@@ -147,7 +136,7 @@ export const MetamaskContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-   if (defaultAccount){ 
+   if (defaultAccount && usdcContract && usdtContract && presaleContract){ 
     console.log("defaultAccount: ", defaultAccount);
     balanceOfUsdc(defaultAccount);
     console.log("usdc: ", usdcBalance);
