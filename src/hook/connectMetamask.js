@@ -76,15 +76,22 @@ export const MetamaskContextProvider = ({ children }) => {
     }
   };
   const balanceOfUsdc = async (address) => {
-
-    setUsdcBalance(await usdcContract.balanceOf(address)) 
-
+    const tx = await usdcContract.balanceOf(address);
+    // await tx.wait();
+    // console.log('tx minned: ')
+    // console.log(tx);
+    setUsdcBalance(tx.toString());
+    console.log("tx Usdc", tx)
   };
   const balanceOfUsdt = async (address) => {
     await usdtContract.balanceOf(address);
+    setUsdtBalance(tx.toString());
+    console.log("tx Usdt", tx)
   };
   const allowanceUsdc = async (address) => {
-    await usdcContract.allowance(address);
+   const tx = await usdcContract.allowance(address);
+   setUsdcAllowance(tx.toString());
+    console.log("tx Usdt A", tx)
   };
   const allowanceUsdt = async (address) => {
     await usdtContract.allowance(address);
@@ -138,8 +145,16 @@ export const MetamaskContextProvider = ({ children }) => {
       });
   };
 
-  // useEffect(()=>{
-  //   balanceOfUsdc(defaultAccount)
+  useEffect(() => {
+    console.log("defaultAccount: ",defaultAccount)
+    balanceOfUsdc(defaultAccount);
+    console.log('usdc: ', usdcBalance)
+    balanceOfUsdt(defaultAccount);
+    console.log('usd: ', usdtBalance)
+    balanceOfUsdc(defaultAccount);
+    console.log('usdc: ', usdcBalance)
+    console.log("finish");
+  });
   //   setUsdcBalance(res)
   //   console.log('usdcBalance: ',res)
   // },[usdcContract])
@@ -147,7 +162,6 @@ export const MetamaskContextProvider = ({ children }) => {
   //   let res = balanceOfUsdt(defaultAccount)
   //   setUsdtBalance(ethers.utils.formatUnits(res, 6))
   //   console.log('usdtBalance:',usdcBalance)
-  // },[])
 
   return (
     <MetamaskContext.Provider
@@ -168,7 +182,7 @@ export const MetamaskContextProvider = ({ children }) => {
         withdraw,
         registerToWhitelist,
         banFromWhiteList,
-        allowanceUsdt
+        allowanceUsdt,
       }}
     >
       {children}

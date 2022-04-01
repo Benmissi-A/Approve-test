@@ -88,6 +88,15 @@ const App = () => {
       console.log("handleClickBuy", e.message);
     }
   };
+  console.log("userBalance",userBalance,
+    "usdcBalance",usdcBalance,
+    "usdtBalance",usdtBalance,
+    "usdcAllowance",usdcAllowance,
+    "usdtAllowance",usdtAllowance,
+    "tbioBalance",tbioBalance,
+    "totalInvest",totalInvest,
+    "totalSupply",totalSupply,
+    "userInvestBalance",userInvestBalance)
 
   return (
     <>
