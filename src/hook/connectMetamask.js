@@ -10,7 +10,7 @@ import {
 export const MetamaskContext = createContext();
 
 export const MetamaskContextProvider = ({ children }) => {
-  const [errorMessage,setErrorMessage] = useState(null)
+  const [errorMessage, setErrorMessage] = useState(null);
   const [defaultAccount, setDefaultAccount] = useState(null);
   const [userBalance, setUserbalance] = useState(null);
   //const [connectButtonText, setConnectButtonText] = useState(null)
@@ -18,13 +18,14 @@ export const MetamaskContextProvider = ({ children }) => {
   const [usdcContract, setUsdcContract] = useState(null);
   const [usdtContract, setUsdtContract] = useState(null);
   const [presaleContract, setPresaleContract] = useState(null);
-  const [usdcBalance,setUsdcBalance] = useState(null)
-  const [usdcAllowance,setUsdcAllowance] = useState(null)
-  const [usdtBalance,setUsdtBalance] = useState(null)
-  const [usdtAllowance,setUsdtAllowance] = useState(null)
-  const [totalInvest,setTotalInvest] = useState(null)
-  const [totalSupply,setTotaSupply] = useState(null)
-  const [userInvestBalance,setUserInvestBalance]= useState(null)
+  const [usdcBalance, setUsdcBalance] = useState(null);
+  const [usdcAllowance, setUsdcAllowance] = useState(null);
+  const [usdtBalance, setUsdtBalance] = useState(null);
+  const [tbioBalance, setTbioBalance] = useState(null);
+  const [usdtAllowance, setUsdtAllowance] = useState(null);
+  const [totalInvest, setTotalInvest] = useState(null);
+  const [totalSupply, setTotaSupply] = useState(null);
+  const [userInvestBalance, setUserInvestBalance] = useState(null);
 
   const connectWallet = () => {
     if (window.ethereum) {
@@ -34,15 +35,14 @@ export const MetamaskContextProvider = ({ children }) => {
           accountChangedHandler(result[0]);
         });
     } else {
-      setErrorMessage('install Metamask')
+      setErrorMessage("install Metamask");
     }
   };
   const accountChangedHandler = (newAccount) => {
     updateEthers();
-    setDefaultAccount(newAccount)
+    setDefaultAccount(newAccount);
     getUserBalance(newAccount);
   };
-
 
   const updateEthers = () => {
     let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
@@ -59,11 +59,10 @@ export const MetamaskContextProvider = ({ children }) => {
       tempSigner
     );
     setPresaleContract(PresaleContract);
-    setSigner(tempSigner)
-
+    setSigner(tempSigner);
   };
 
-// USD FUNCTIONS
+  // USD FUNCTIONS
   const approve = async (amount, nb) => {
     try {
       nb === 0
@@ -73,47 +72,63 @@ export const MetamaskContextProvider = ({ children }) => {
       console.log(window.etherum);
     } catch (e) {
       console.log(e);
-      setErrorMessage(e.data.message)
+      setErrorMessage(e.data.message);
     }
   };
   const balanceOfUsdc = async (address) => {
-    await usdcContract.balanceOf(address)
-  }
-  const balanceOfUsdt = async (address) => {
-    await usdtContract.balanceOf(address)
-  }
-  const allowanceUsdc = async (address) => {
-    await usdcContract.allowance(address)
-  }
-  const allowanceUsdt = async (address) => {
-    await usdtContract.allowance(address)
-  }
-  //PRESALE FUNCTIONS
-  const deposit = async (amount, nb) => {
-  await presaleContract.buyTbio(amount, nb);
-   };
-   const permission = async () => {
-     await presaleContract.permission()
-   }
-   const withdraw = async () =>{
-    await presaleContract.withdraw()
-   }
-   const registerToWhitelist = async (address) =>{
-    await presaleContract.registerToWhitelist(address)
-   }
 
-    useEffect(()=>{
-      console.log("signer", signer)
-      console.log(
-        'UsdcContract',
-        usdcContract,
-        'UsdtContract',
-        usdtContract,
-        'PresaleContract',
-        presaleContract,
-    )
-    console.log("errorMessage",errorMessage)
-    },[signer,errorMessage,usdcContract,usdtContract,presaleContract])
+    setUsdcBalance(await usdcContract.balanceOf(address)) 
+
+  };
+  const balanceOfUsdt = async (address) => {
+    await usdtContract.balanceOf(address);
+  };
+  const allowanceUsdc = async (address) => {
+    await usdcContract.allowance(address);
+  };
+  const allowanceUsdt = async (address) => {
+    await usdtContract.allowance(address);
+  };
+  //PRESALE FUNCTIONS
+
+  const getTbioBalance = async (address) => {
+    await presaleContract.getUserBalance(address);
+  };
+  const getTotalSupply = async () => {
+    await presaleContract.totalSupply();
+  };
+  const getTotalInvest = async () => {
+    await presaleContract.totalInvest();
+  };
+  const deposit = async (amount, nb) => {
+    await presaleContract.buyTbio(amount, nb);
+  };
+
+  const permission = async () => {
+    await presaleContract.permission();
+  };
+  const withdraw = async () => {
+    await presaleContract.withdraw();
+  };
+  const registerToWhitelist = async (address) => {
+    await presaleContract.registerToWhitelist(address);
+  };
+  const banFromWhiteList = async (address) => {
+    await presaleContract.banFromWhiteList(address);
+  };
+
+  useEffect(() => {
+    console.log("signer", signer);
+    console.log(
+      "UsdcContract",
+      usdcContract,
+      "UsdtContract",
+      usdtContract,
+      "PresaleContract",
+      presaleContract
+    );
+    console.log("errorMessage", errorMessage);
+  }, [signer, errorMessage, usdcContract, usdtContract, presaleContract]);
 
   const getUserBalance = (address) => {
     window.ethereum
@@ -122,9 +137,39 @@ export const MetamaskContextProvider = ({ children }) => {
         setUserbalance(ethers.utils.formatEther(balance));
       });
   };
+
+  // useEffect(()=>{
+  //   balanceOfUsdc(defaultAccount)
+  //   setUsdcBalance(res)
+  //   console.log('usdcBalance: ',res)
+  // },[usdcContract])
+  // useEffect(()=>{
+  //   let res = balanceOfUsdt(defaultAccount)
+  //   setUsdtBalance(ethers.utils.formatUnits(res, 6))
+  //   console.log('usdtBalance:',usdcBalance)
+  // },[])
+
   return (
     <MetamaskContext.Provider
-      value={{ connectWallet, userBalance, approve, deposit }}
+      value={{
+        connectWallet,
+        userBalance,
+        usdcBalance,
+        usdtBalance,
+        usdcAllowance,
+        usdtAllowance,
+        tbioBalance,
+        totalInvest,
+        totalSupply,
+        userInvestBalance,
+        approve,
+        deposit,
+        permission,
+        withdraw,
+        registerToWhitelist,
+        banFromWhiteList,
+        allowanceUsdt
+      }}
     >
       {children}
     </MetamaskContext.Provider>

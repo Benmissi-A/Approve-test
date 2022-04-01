@@ -31,11 +31,28 @@ import {
 import { StarIcon } from "@chakra-ui/icons";
 
 const App = () => {
-  const { connectWallet, userBalance, approve, deposit } =
+  const { connectWallet,
+    userBalance,
+    usdcBalance,
+    usdtBalance,
+    usdcAllowance,
+    usdtAllowance,
+    tbioBalance,
+    totalInvest,
+    totalSupply,
+    userInvestBalance,
+    approve,
+    deposit,
+    permission,
+    withdraw,
+    registerToWhitelist,
+    banFromWhiteList,
+    allowanceUsdt } =
     useContext(MetamaskContext);
 
   // const [userBalance, setUserbalance] = useState(null);
   const [approveTx, setApproveTx] = useState(false);
+
   const [width, setWidth] = useState(0);
   const [value, setValue] = React.useState(0);
   const handleChange = (value) => setValue(value);
@@ -80,7 +97,8 @@ const App = () => {
           <button onClick={handleClickApprove}>Click to approve</button>
         ) : (
           <button onClick={handleClickBuy}>Click to buy</button>
-        )}
+          )}
+          <p>UsdcBalance = {usdcBalance}</p>
       </div>
       <Box p="20px" bg="rgba(79,79,79,0.38)" borderRadius="30" m="20px">
         <Text fontSize={22} fontWeight="extrabold" color="#fff">
