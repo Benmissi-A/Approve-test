@@ -54,6 +54,8 @@ const App = () => {
   // const [userBalance, setUserbalance] = useState(null);
 
   const [approveTx, setApproveTx] = useState(false);
+  const [currency, setCurrency] = useState(null);
+  const [ammount, setAmmount] = useState(null);
 
   const [width, setWidth] = useState(0);
   const [value, setValue] = React.useState(0);
@@ -66,6 +68,20 @@ const App = () => {
     handleResize();
   });
   window.addEventListener("resize", handleResize);
+
+ const handleCurrencyChange = (e) =>{
+  setCurrency(e.target.value)
+}
+const handleChangeAmount = (e) => {
+  console.log("e.target.value", e.target.value)
+  setAmmount(e.target.value)
+}
+useEffect(()=>{
+  console.log('currency', currency)
+},[currency])
+useEffect(()=>{
+  console.log('ammount', ammount)
+},[ammount])
 
   // smartContracts functions
   const handleClickBuy = async () => {
@@ -210,7 +226,7 @@ const App = () => {
             >
               Choisissez votre devise :
             </Text>
-            <Select placeholder="Select a stable coin">
+            <Select onChange={handleCurrencyChange} placeholder="Select a stable coin">
               <option value={0}>USDC</option>
               <option value={1}>USDT</option>
             </Select>
@@ -221,8 +237,11 @@ const App = () => {
               mr="2rem"
               value={value}
               min={10}
-              max={50000}
-              onChange={handleChange}
+              max={(50000 - userInvestBalance)}
+              onChange={
+                handleChange 
+             }
+              
             >
               <NumberInputField />
               <NumberInputStepper>
@@ -236,7 +255,7 @@ const App = () => {
               value={value}
               onChange={handleChange}
               min={10}
-              max={50000}
+              max={(50000 - userInvestBalance)}
               colorScheme="teal"
             >
               <SliderTrack>
