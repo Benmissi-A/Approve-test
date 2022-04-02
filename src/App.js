@@ -117,15 +117,23 @@ const App = () => {
   //   }
   // };
 
+ 
+  
   return (
     <>
       <div className="App">
         <button onClick={connectWallet}>connect metamask</button>
-        {!approveTx ? (
+        {/* {!approveTx ? (
           <button onClick={handleClickApprove}>Click to approve</button>
         ) : (
           <button onClick={handleClickBuy}>Click to buy</button>
-        )}
+        )} */}
+          <button onClick={ !approveTx ? handleClickApprove : handleClickBuy}>
+            {!approveTx 
+            ? `Approuver du '${currency === 0 
+              ? ' $USDC' 
+              : '$USDT'}` 
+            : `Acheter du $TBIO`}</button>
         <p>UsdcBalance = {usdcBalance}</p>
         <p>userBalance = {userBalance}</p>
         <p>usdcAllowance = {usdcAllowance}</p>
