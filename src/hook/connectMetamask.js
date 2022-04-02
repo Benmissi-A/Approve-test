@@ -14,7 +14,7 @@ export const MetamaskContextProvider = ({ children }) => {
   const [defaultAccount, setDefaultAccount] = useState(null);
   const [userBalance, setUserbalance] = useState(null);
   //const [connectButtonText, setConnectButtonText] = useState(null)
-  const [signer, setSigner] = useState(null);
+  //const [signer, setSigner] = useState(null);
   const [usdcContract, setUsdcContract] = useState(null);
   const [usdtContract, setUsdtContract] = useState(null);
   const [presaleContract, setPresaleContract] = useState(null);
@@ -45,21 +45,20 @@ export const MetamaskContextProvider = ({ children }) => {
   };
 
   const updateEthers = () => {
-    let tempProvider = new ethers.providers.Web3Provider(window.ethereum);
-    let tempSigner = tempProvider.getSigner();
+    const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
+    const tempSigner = tempProvider.getSigner();
 
     console.log("contractSigner", tempSigner);
-    let UsdcContract = new ethers.Contract(UsdcAddress, UsdcAbi, tempSigner);
+    const UsdcContract = new ethers.Contract(UsdcAddress, UsdcAbi, tempSigner);
     setUsdcContract(UsdcContract);
-    let UsdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, tempSigner);
+    const UsdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, tempSigner);
     setUsdtContract(UsdtContract);
-    let PresaleContract = new ethers.Contract(
+    const PresaleContract = new ethers.Contract(
       TerrabioDAOPresaleAddress,
       TerrabioDAOPresaleAbi,
       tempSigner
     );
     setPresaleContract(PresaleContract);
-    setSigner(tempSigner);
   };
 
   // USD FUNCTIONS
@@ -68,8 +67,6 @@ export const MetamaskContextProvider = ({ children }) => {
       nb === 0
         ? await usdcContract.approve(TerrabioDAOPresaleAddress, amount)
         : await usdtContract.approve(TerrabioDAOPresaleAddress, amount);
-
-      console.log(window.etherum);
     } catch (e) {
       console.log(e);
       setErrorMessage(e.data.message);
@@ -77,39 +74,39 @@ export const MetamaskContextProvider = ({ children }) => {
   };
   const balanceOfUsdc = async (address) => {
     const tx = await usdcContract.balanceOf(address);
-    setUsdcBalance(Number(ethers.utils.formatUnits(tx.toString(),6)));
+    setUsdcBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
     console.log("tx Usdc", tx);
   };
   const balanceOfUsdt = async (address) => {
     const tx = await usdtContract.balanceOf(address);
-    setUsdtBalance(Number(ethers.utils.formatUnits(tx.toString(),6)));
+    setUsdtBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
     console.log("tx Usdt", tx);
   };
   const allowanceUsdc = async (address) => {
-    const tx = await usdcContract.allowance(address,TerrabioDAOPresaleAddress);
-    setUsdcAllowance(Number(ethers.utils.formatUnits(tx.toString(),6)));
+    const tx = await usdcContract.allowance(address, TerrabioDAOPresaleAddress);
+    setUsdcAllowance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
   };
   const allowanceUsdt = async (address) => {
-    const tx = await usdtContract.allowance(address,TerrabioDAOPresaleAddress);
-    setUsdtAllowance(Number(ethers.utils.formatUnits(tx.toString(),6)));
+    const tx = await usdtContract.allowance(address, TerrabioDAOPresaleAddress);
+    setUsdtAllowance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
   };
   //PRESALE FUNCTIONS
 
   const getTbioBalance = async (address) => {
     const tx = await presaleContract.getUserBalance(address);
-    setTbioBalance(Number(ethers.utils.formatUnits(tx.toString(),18)) )
+    setTbioBalance(Number(ethers.utils.formatUnits(tx.toString(), 18)));
   };
   const getTotalSupply = async () => {
-    const tx  = await presaleContract.totalSupply();
-    setTotaSupply(Number(ethers.utils.formatUnits(tx.toString(),18)))
+    const tx = await presaleContract.totalSupply();
+    setTotaSupply(Number(ethers.utils.formatUnits(tx.toString(), 18)));
   };
   const getUserInvestBalance = async (address) => {
-    const tx = await presaleContract.getUserInvestBalance(address)
-    setUserInvestBalance(Number(ethers.utils.formatUnits(tx.toString(),6)))
-  }
+    const tx = await presaleContract.getUserInvestBalance(address);
+    setUserInvestBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
+  };
   const getTotalInvest = async () => {
     const tx = await presaleContract.totalInvest();
-    setTotalInvest(Number(ethers.utils.formatUnits(tx.toString(),6)))
+    setTotalInvest(Number(ethers.utils.formatUnits(tx.toString(), 6)));
   };
   const deposit = async (amount, nb) => {
     await presaleContract.buyTbio(amount, nb);
@@ -128,8 +125,6 @@ export const MetamaskContextProvider = ({ children }) => {
     await presaleContract.banFromWhiteList(address);
   };
 
-
-
   const getUserBalance = (address) => {
     window.ethereum
       .request({ method: "eth_getBalance", params: [address, "latest"] })
@@ -139,38 +134,33 @@ export const MetamaskContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-   if (defaultAccount && usdcContract && usdtContract && presaleContract){ 
-    console.log("defaultAccount: ", defaultAccount);
-    balanceOfUsdc(defaultAccount);
-    console.log("usdc: ", usdcBalance);
-    balanceOfUsdt(defaultAccount);
-    console.log("usdt: ", usdtBalance);
-    
-      allowanceUsdc(defaultAccount)
+    if (defaultAccount && usdcContract && usdtContract && presaleContract) {
+      console.log("defaultAccount: ", defaultAccount);
+      balanceOfUsdc(defaultAccount);
+      console.log("usdc: ", usdcBalance);
+      balanceOfUsdt(defaultAccount);
+      console.log("usdt: ", usdtBalance);
+
+      allowanceUsdc(defaultAccount);
       console.log("usdcAllowance: ", usdcAllowance);
-    allowanceUsdt(defaultAccount)
-    console.log("usdtAllowance: ", usdtAllowance);
+      allowanceUsdt(defaultAccount);
+      console.log("usdtAllowance: ", usdtAllowance);
 
-    getTbioBalance(defaultAccount)
-    console.log("tbioBalance: ", tbioBalance);
+      getTbioBalance(defaultAccount);
+      console.log("tbioBalance: ", tbioBalance);
 
-    getTotalInvest()
-    console.log("totalInvest: ", totalInvest);
+      getTotalInvest();
+      console.log("totalInvest: ", totalInvest);
 
-    getTotalSupply()
-    console.log("totalSupply: ", totalSupply);
-    getUserInvestBalance(defaultAccount)
-    console.log("userInvestBalance: ", userInvestBalance);
-  //   console.log("finish");
-}
-  },[usdcContract]);
-  //   setUsdcBalance(res)
-  //   console.log('usdcBalance: ',res)
-  // },[usdcContract])
-  // useEffect(()=>{
-  //   let res = balanceOfUsdt(defaultAccount)
-  //   setUsdtBalance(ethers.utils.formatUnits(res, 6))
-  //   console.log('usdtBalance:',usdcBalance)
+      getTotalSupply();
+      console.log("totalSupply: ", totalSupply);
+      getUserInvestBalance(defaultAccount);
+     
+      console.log("userInvestBalance: ", userInvestBalance);
+      console.log("error", errorMessage);
+      //   console.log("finish");
+    }
+  });
 
   return (
     <MetamaskContext.Provider

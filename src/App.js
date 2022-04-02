@@ -46,8 +46,7 @@ const App = () => {
     permission,
     withdraw,
     registerToWhitelist,
-    banFromWhiteList,
-    allowanceUsdt } =
+    banFromWhiteList } =
     useContext(MetamaskContext);
 
   // const [userBalance, setUserbalance] = useState(null);
@@ -99,6 +98,14 @@ const App = () => {
           <button onClick={handleClickBuy}>Click to buy</button>
           )}
           <p>UsdcBalance = {usdcBalance}</p>
+          <p>userBalance = {userBalance}</p>
+          <p>usdcAllowance = {usdcAllowance}</p>
+          <p>usdtAllowance = {usdtAllowance}</p>
+          <p>totalInvest = {totalInvest}</p>
+          <button onClick={permission}>Click to permission</button>
+          <button onClick={registerToWhitelist}>Click to registerToWhitelist</button>
+          <button onClick={withdraw}>Click to withdraw</button>
+          <button onClick={banFromWhiteList}>Click to banFromWhiteList</button>
       </div>
       <Box p="20px" bg="rgba(79,79,79,0.38)" borderRadius="30" m="20px">
         <Text fontSize={22} fontWeight="extrabold" color="#fff">
