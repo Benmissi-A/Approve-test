@@ -77,40 +77,39 @@ export const MetamaskContextProvider = ({ children }) => {
   };
   const balanceOfUsdc = async (address) => {
     const tx = await usdcContract.balanceOf(address);
-    setUsdcBalance(Number(tx.toString()));
+    setUsdcBalance(Number(ethers.utils.formatUnits(tx.toString(),6)));
     console.log("tx Usdc", tx);
   };
   const balanceOfUsdt = async (address) => {
     const tx = await usdtContract.balanceOf(address);
-    setUsdtBalance(Number(tx.toString()));
+    setUsdtBalance(Number(ethers.utils.formatUnits(tx.toString(),6)));
     console.log("tx Usdt", tx);
   };
   const allowanceUsdc = async (address) => {
-    const tx = await usdcContract.allowance(address,);
-    setUsdcAllowance(Number(tx.toString()));
-    console.log("tx Usdt A", tx);
+    const tx = await usdcContract.allowance(address,TerrabioDAOPresaleAddress);
+    setUsdcAllowance(Number(ethers.utils.formatUnits(tx.toString(),6)));
   };
   const allowanceUsdt = async (address) => {
-    const tx = await usdtContract.allowance(address);
-    setUsdtAllowance(Number(tx.toString()));
+    const tx = await usdtContract.allowance(address,TerrabioDAOPresaleAddress);
+    setUsdtAllowance(Number(ethers.utils.formatUnits(tx.toString(),6)));
   };
   //PRESALE FUNCTIONS
 
   const getTbioBalance = async (address) => {
     const tx = await presaleContract.getUserBalance(address);
-    setTbioBalance(Number(tx.toString()))
+    setTbioBalance(Number(ethers.utils.formatUnits(tx.toString(),18)) )
   };
   const getTotalSupply = async () => {
     const tx  = await presaleContract.totalSupply();
-    setTotaSupply(Number(tx.toString()))
+    setTotaSupply(Number(ethers.utils.formatUnits(tx.toString(),18)))
   };
   const getUserInvestBalance = async (address) => {
     const tx = await presaleContract.getUserInvestBalance(address)
-    setUserInvestBalance(Number(tx.toString()))
+    setUserInvestBalance(Number(ethers.utils.formatUnits(tx.toString(),6)))
   }
   const getTotalInvest = async () => {
     const tx = await presaleContract.totalInvest();
-    setTotalInvest(Number(tx.toString()))
+    setTotalInvest(Number(ethers.utils.formatUnits(tx.toString(),6)))
   };
   const deposit = async (amount, nb) => {
     await presaleContract.buyTbio(amount, nb);
@@ -147,10 +146,10 @@ export const MetamaskContextProvider = ({ children }) => {
     balanceOfUsdt(defaultAccount);
     console.log("usdt: ", usdtBalance);
     
-    //   allowanceUsdc(defaultAccount)
-    //   console.log("usdcAllowance: ", usdcAllowance);
-  //   allowanceUsdt(defaultAccount)
-  //   console.log("usdtAllowance: ", usdtAllowance);
+      allowanceUsdc(defaultAccount)
+      console.log("usdcAllowance: ", usdcAllowance);
+    allowanceUsdt(defaultAccount)
+    console.log("usdtAllowance: ", usdtAllowance);
 
     getTbioBalance(defaultAccount)
     console.log("tbioBalance: ", tbioBalance);
