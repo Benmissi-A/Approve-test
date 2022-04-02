@@ -7,7 +7,6 @@ import {
   Box,
   Image,
   Text,
-  Progress,
   NumberInput,
   NumberInputField,
   NumberInputStepper,
@@ -18,16 +17,14 @@ import {
   SliderFilledTrack,
   SliderThumb,
   Select,
-  Accordion,
-  AccordionItem,
-  AccordionButton,
-  AccordionPanel,
-  AccordionIcon,
-  Table,
-  Tbody,
-  Tr,
-  Td,
-  TableCaption,
+  Divider,
+  Link,
+  List,
+  ListItem,
+  ListIcon,
+  OrderedList,
+  UnorderedList,
+  Button,
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 
@@ -58,7 +55,7 @@ const App = () => {
   const [currency, setCurrency] = useState(null);
 
   const [width, setWidth] = useState(0);
-  const [value, setValue] = React.useState(0);
+  const [value, setValue] = useState(0);
   const handleChangeValue = (value) => setValue(value);
   const handleResize = () => {
     setWidth(window.innerWidth);
@@ -75,11 +72,9 @@ const App = () => {
 
   useEffect(() => {
     console.log("currency", currency);
-  }, [currency]);
-  useEffect(() => {
     console.log("value", value);
     console.log("value", value * 10 ** 6);
-  }, [value]);
+  }, [currency, value]);
 
   // smartContracts functions
   const handleClickBuy = async () => {
@@ -117,68 +112,97 @@ const App = () => {
   //   }
   // };
 
- 
-  
   return (
     <>
       <div className="App">
         <button onClick={connectWallet}>connect metamask</button>
-        {/* {!approveTx ? (
-          <button onClick={handleClickApprove}>Click to approve</button>
+        {!approveTx ? (
+          <button onClick={!approveTx ? handleClickApprove : handleClickBuy}>
+            {" "}
+            {!approveTx ? "Click to approve" : "Click to buy"}
+          </button>
         ) : (
           <button onClick={handleClickBuy}>Click to buy</button>
-        )} */}
-          <button onClick={ !approveTx ? handleClickApprove : handleClickBuy}>
-            {!approveTx 
-            ? `Approuver du '${currency === 0 
-              ? ' $USDC' 
-              : '$USDT'}` 
-            : `Acheter du $TBIO`}</button>
+        )}
         <p>UsdcBalance = {usdcBalance}</p>
         <p>userBalance = {userBalance}</p>
         <p>usdcAllowance = {usdcAllowance}</p>
         <p>usdtAllowance = {usdtAllowance}</p>
         <p>totalInvest = {totalInvest}</p>
-        {/*  <button onClick={permission}>Click to permission</button>
-      <button onClick={handleClickRegisterToWhitelist(defaultAccount)}>Click to registerToWhitelist</button>
-         <button onClick={withdraw}>Click to withdraw</button> 
-        <button onClick={banFromWhiteList}>Click to banFromWhiteList</button>*/}
+        <button onClick={permission}>Click to permission</button>
+        {/*  <button onClick={handleClickRegisterToWhitelist(defaultAccount)}>Click to registerToWhitelist</button>
+         <button onClick={withdraw}>Click to withdraw</button> */}
+        <button onClick={banFromWhiteList}>Click to banFromWhiteList</button>
       </div>
+
       <Box p="20px" bg="rgba(79,79,79,0.38)" borderRadius="30" m="20px">
         <Text fontSize={22} fontWeight="extrabold" color="#fff">
           Tu t'apprêtes à t'embarquer dans l'aventure TerraBioDAO !
         </Text>
         <Text fontSize={16} fontWeight="medium" color="#fff">
           En participant à cette prévente tu as l'occasion d'acquérir notre
-          jeton au prix avantageux de 0,06$ (0,04$ si tu t'es inscits à la
+          jeton au prix avantageux de 0,06$ (0,04$ si tu t'es inscrit à la
           whitelist avant le 31 Mars 2022).
         </Text>
         <Text fontSize={16} fontWeight="medium" color="#fff">
-          Assures toi d'avoir correctement paramétré ton wallet Metamask comme
-          indiqué dans ce tutoriel.
+          Assure-toi d'avoir correctement paramétré ton wallet Metamask{" "}
+          <Link
+            fontSize={16}
+            fontWeight="bold"
+            color="teal"
+            href="https://terrabiodao.gitbook.io/terrabiodao/mainnet/presale"
+            target="_blank"
+          >
+            comme indiqué dans ce tutoriel.
+          </Link>
         </Text>
+        <br />
         <Text fontSize={16} fontWeight="medium" color="#fff">
           Les jetons acceptés lors de cette levée de fonds sont l'USDT, et
           l'USDC.
         </Text>
         <Text fontSize={16} fontWeight="medium" color="#fff">
-          Avant d'effectuer ta transaction assures toi d'avoir suffisament
-          d'ASTR pour payer les frais de transaction.
+          Avant d'effectuer ta transaction assure-toi d'avoir suffisament d'ASTR
+          pour payer les frais de transaction.
         </Text>
         <Text fontSize={16} fontWeight="medium" color="#fff">
-          Tu n'en a pas ? Pas d'inquiétudes tu trouvera ici un faucet pour en
-          obtenir.
+          Tu n'en a pas ? Pas d'inquiétudes{" "}
+          <Link
+            fontSize={16}
+            fontWeight="bold"
+            color="teal"
+            href="https://portal.astar.network/#/balance/wallet"
+            target="_blank"
+          >
+            tu trouveras ici un faucet pour en obtenir.
+          </Link>
         </Text>
         <br />
         <Text fontSize={16} fontWeight="medium" color="#fff">
-          Ca y est ? tu es prêt ?
+          Pour devenir un Terranaute, il suffit de connecter ton Metamask avant
+          de procéder à la transaction.
         </Text>
+        <Button
+          mt="20px"
+          mb="20px"
+          colorScheme="teal"
+          variant="solid"
+          onClick={connectWallet}
+        >
+          <Image
+            src="https://terrabiodao.org/wp-content/uploads/2022/03/metamask.svg"
+            boxSize="30px"
+            mr="10px"
+          />{" "}
+          connect Wallet
+        </Button>
         <Text fontSize={16} fontWeight="medium" color="#fff">
-          Pour devenir un Terranaute, indique le montant que tu souhaites
-          investir et valide ta transaction sur Metamask !
+          En utilisant un wallet non-custodial, vous êtes le seul responsable de
+          vos cryptos monnaies. Toute erreur peut entrainer la perte
+          irrémédiable de votre argent.
         </Text>
         <Text fontSize={16} fontWeight="extrabold" color="#fff">
-          Bravo Terranaute, bienvenue à bord.
+          La Team terrabioDAO vous remercie par avance de votre soutien !
         </Text>
       </Box>
 
@@ -187,40 +211,115 @@ const App = () => {
         borderRadius="30"
         m="20px"
         p="20px"
-        direction="column"
-      >
-        <Flex
-          direction={width <= 700 ? "column" : "row"}
-          justifyContent="space-between"
-        >
-          <Text fontSize={22} fontWeight="extrabold" color="#fff">
-            Nombre de $TBIO restant
-          </Text>
-          <Text fontSize={22} fontWeight="extrabold" color="#fff">
-            {totalSupply}/15.000.000 $TBIO
-          </Text>
-        </Flex>
-        <Box mt="10px">
-          <Progress
-            value={25}
-            size="lg"
-            borderRadius="30"
-            colorScheme="teal"
-            bg="#00D1EE"
-          />
-        </Box>
-      </Flex>
-
-      <Flex
-        bg="rgba(79,79,79,0.38)"
-        borderRadius="30"
-        m="20px"
         direction={width <= 850 ? "column" : "row"}
+        alignItems="center"
+        grow="1"
       >
-        <Flex p="20px" direction="column" grow="1">
+        <Flex direction="column" grow="1" w="100%" p="15px">
+          <Flex pt="20px" pb="20px">
+            <Box
+              display="flex"
+              alignItems="center"
+              borderRadius="30"
+              bg="rgba(79, 79, 79, 0.38)"
+              border="5px"
+              borderColor="#fff"
+              p="20px"
+              justifyItems="center"
+              w="100%"
+            >
+              <Text fontSize={20} fontWeight="medium" color="#fff" pr="10px">
+                Balance USDC : {usdcBalance}
+              </Text>
+              <Image
+                src="https://terrabiodao.org/logo/usd-coin-usdc-logo.svg"
+                boxSize="30px"
+                objectFit="cover"
+                alt="USDC"
+              />
+            </Box>
+          </Flex>
+          <Flex pt="20px" pb="20px">
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              borderRadius="30"
+              bg="rgba(79, 79, 79, 0.38)"
+              border="5px"
+              borderColor="#fff"
+              p="20px"
+              justifyItems="center"
+              w="100%"
+            >
+              <Text fontSize={20} fontWeight="medium" color="#fff" pr="10px">
+                Balance USDT : {usdtBalance}
+              </Text>
+              <Image
+                src="https://terrabiodao.org/logo/tether-usdt-logo.svg"
+                boxSize="30px"
+                objectFit="cover"
+                alt="USDT"
+              />
+            </Box>
+          </Flex>
+
+          <Flex pt="20px" pb="20px" grow="1">
+            <Box
+              display="flex"
+              flexDirection="row"
+              alignItems="center"
+              borderRadius="30"
+              bg="rgba(79, 79, 79, 0.38)"
+              border="5px"
+              borderColor="#fff"
+              p="20px"
+              justifyItems="center"
+              w="100%"
+            >
+              <Text fontSize={20} fontWeight="medium" color="#fff" mr="15px">
+                Balance $TBIO : {tbioBalance}
+              </Text>
+              <Image
+                src="https://terrabiodao.org/logo/tbio-logo.svg"
+                boxSize="30px"
+                objectFit="cover"
+                alt="TBIO"
+              />
+            </Box>
+          </Flex>
+        </Flex>
+        <Flex
+          direction="column"
+          grow="1"
+          w="100%"
+          p="20px"
+          borderRadius="30"
+          bg="rgba(79,79,79,0.38)"
+        >
           <Text fontSize={22} fontWeight="extrabold" color="#fff">
             Achetez vos $TBIO
           </Text>
+          <Link
+            fontSize={16}
+            fontWeight="bold"
+            color="teal"
+            href="https://terrabiodao.gitbook.io/terrabiodao/mainnet/presale"
+            target="_blank"
+          >
+            Assurez-vous d'être sur le réseau Astar.
+          </Link>
+
+          <OrderedList>
+            <ListItem fontSize={16} fontWeight="medium" color="#fff">
+              Cliquez sur <i>"approuver la transaction"</i>
+            </ListItem>
+            <ListItem fontSize={16} fontWeight="medium" color="#fff">
+              Une fois votre première opération effectuée, appuyez sur{" "}
+              <i>"acheter du $TBIO"</i>
+            </ListItem>
+          </OrderedList>
+
           <Flex mt="15px" alignItems="baseline" direction="column">
             <Text
               fontSize={16}
@@ -275,124 +374,18 @@ const App = () => {
               />
             </Slider>
           </Flex>
-        </Flex>
-        <Flex p="20px" direction="column" grow="1">
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            borderRadius="30"
-            bg="#fff"
-            border="5px"
-            borderColor="rgba(79,79,79,0.38)"
-            p="20px"
-            mb="20px"
-            justifyItems="center"
+          <Button
+            onClick={!approveTx ? handleClickApprove : handleClickBuy}
+            mt="15px"
           >
-            <Text fontSize={20} fontWeight="medium" color="teal" pr="10px">
-              Balance USDC : {usdcBalance}
-            </Text>
-            <Image
-              src="https://terrabiodao.org/logo/usd-coin-usdc-logo.svg"
-              boxSize="30px"
-              objectFit="cover"
-              alt="USDC"
-            />
-            <Text
-              fontSize={20}
-              fontWeight="medium"
-              color="teal"
-              pl="20px"
-              pr="10px"
-            >
-              Balance USDT : {usdtBalance}
-            </Text>
-            <Image
-              src="https://terrabiodao.org/logo/tether-usdt-logo.svg"
-              boxSize="30px"
-              objectFit="cover"
-              alt="USDT"
-            />
-          </Box>
-          <Box
-            display="flex"
-            flexDirection="row"
-            alignItems="center"
-            borderRadius="30"
-            bg="#fff"
-            border="5px"
-            borderColor="rgba(79,79,79,0.38)"
-            p="20px"
-            justifyItems="center"
-          >
-            <Text fontSize={20} fontWeight="medium" color="teal" mr="15px">
-              Monstant investi : {userInvestBalance}
-            </Text>
-            <Image
-              src="https://terrabiodao.org/logo/usd-coin-usdc-logo.svg"
-              boxSize="30px"
-              objectFit="cover"
-              alt="USDC"
-            />
-            <Image
-              src="https://terrabiodao.org/logo/tether-usdt-logo.svg"
-              boxSize="30px"
-              objectFit="cover"
-              alt="USDT"
-            />
-          </Box>
+            {!approveTx
+              ? ` ${Number(currency) === 0 && "Approuver du $ USDC"}${
+                Number(currency) === 1 && "Approuver du $ USDT"
+                } ${!currency && "Choisissez un stable"}`
+              : "Acheter du $TBIO "}
+          </Button>
         </Flex>
       </Flex>
-
-      <Accordion
-        defaultIndex={[0]}
-        allowMultiple
-        bg="rgba(79,79,79,0.38)"
-        borderRadius="30"
-        m="20px"
-        p="20px"
-      >
-        <AccordionItem>
-          <h2>
-            <AccordionButton>
-              <Box flex="1" textAlign="left">
-                <Text fontSize={22} fontWeight="extrabold" color="#fff">
-                  Liste des transactions
-                </Text>
-              </Box>
-              <AccordionIcon />
-            </AccordionButton>
-          </h2>
-          <AccordionPanel pb={4}>
-            <Table variant="simple">
-              <TableCaption>Dernières transactions effectuées</TableCaption>
-              <Tbody>
-                <Tr>
-                  <Td color="#fff">Wallet address / Time ago</Td>
-                  <Td color="#fff">From 0x... to 0x...</Td>
-                  <Td isNumeric color="#fff" bg="teal" borderRadius="30px">
-                    25.4
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td color="#fff">Wallet address / Time ago</Td>
-                  <Td color="#fff">From 0x... to 0x...</Td>
-                  <Td isNumeric color="#fff" bg="teal" borderRadius="30px">
-                    30.48
-                  </Td>
-                </Tr>
-                <Tr>
-                  <Td color="#fff">Wallet address / Time ago</Td>
-                  <Td color="#fff">From 0x... to 0x...</Td>
-                  <Td isNumeric color="#fff" bg="teal" borderRadius="30px">
-                    0.91444
-                  </Td>
-                </Tr>
-              </Tbody>
-            </Table>
-          </AccordionPanel>
-        </AccordionItem>
-      </Accordion>
 
       <Flex
         borderRadius="30"
@@ -401,80 +394,131 @@ const App = () => {
         m="20px"
         direction="column"
         grow="1"
+        jutsify="start"
       >
         <Text fontSize={22} fontWeight="extrabold" color="#fff">
           Calendrier de libération des $TBIO
         </Text>
-        <Flex
-          justifyItems="center"
-          justify="space-around"
-          alignItems="center"
-          direction={width <= 950 ? "column" : "row"}
-        >
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Box>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                Phase 1
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                XX/XX/XXXX
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                {tbioBalance / 5} 20% du balance
-              </Text>
-            </Box>
+        <Text fontSize={18} fontWeight="medium" color="#fff" mb="15px">
+          Retrouvez ci-dessous le calendrier de libération de vos jetons $TBIO.
+          Une fois le jeton émis, vous recevrez automatiquement le montant
+          indiqué à chaque échéance. Pour rappel, un vesting de 5 mois est
+          appliqué pour garantir la croissance du $TBIO. Votre montant vous sera
+          automatiquement crédité sur votre wallet Metamask. :)
+        </Text>
+
+        <Flex alignItems="start" direction="column">
+          <Box
+            borderRadius="30"
+            bg="rgba(79,79,79,0.38)"
+            p="20px"
+            display="flex"
+            direction="row"
+            width="100%"
+            alignItems="center"
+          >
+            <Text fontSize={15} fontWeight="medium" color="#fff">
+              Montant disponible le 1er mois : {tbioBalance / 5}
+            </Text>
+            <Image
+              src="https://terrabiodao.org/logo/tbio-logo.svg"
+              ml="10px"
+              boxSize="30px"
+              objectFit="cover"
+              alt="TBIO"
+            />
           </Box>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Box>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                Phase 2
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                XX/XX/XXXX
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                {tbioBalance / 5} 20% du balance
-              </Text>
-            </Box>
+
+          <Divider orientation="horizontal" mt="10px" mb="10px" />
+
+          <Box
+            borderRadius="30"
+            bg="rgba(79,79,79,0.38)"
+            p="20px"
+            display="flex"
+            direction="row"
+            width="100%"
+            alignItems="center"
+          >
+            <Text fontSize={15} fontWeight="medium" color="#fff">
+              Montant disponible le 2eme mois : {tbioBalance / 5}
+            </Text>
+            <Image
+              src="https://terrabiodao.org/logo/tbio-logo.svg"
+              ml="10px"
+              boxSize="30px"
+              objectFit="cover"
+              alt="TBIO"
+            />
           </Box>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Box>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                Phase 3
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                XX/XX/XXXX
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                {tbioBalance / 5} 20% du balance
-              </Text>
-            </Box>
+
+          <Divider orientation="horizontal" mt="10px" mb="10px" />
+
+          <Box
+            borderRadius="30"
+            bg="rgba(79,79,79,0.38)"
+            p="20px"
+            display="flex"
+            direction="row"
+            width="100%"
+            alignItems="center"
+          >
+            <Text fontSize={15} fontWeight="medium" color="#fff">
+              Montant disponible le 3eme mois : {tbioBalance / 5}
+            </Text>
+            <Image
+              src="https://terrabiodao.org/logo/tbio-logo.svg"
+              ml="10px"
+              boxSize="30px"
+              objectFit="cover"
+              alt="TBIO"
+            />
           </Box>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Box>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                Phase 4
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                XX/XX/XXXX
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                {tbioBalance / 5} 20% du balance
-              </Text>
-            </Box>
+
+          <Divider orientation="horizontal" mt="10px" mb="10px" />
+
+          <Box
+            borderRadius="30"
+            bg="rgba(79,79,79,0.38)"
+            p="20px"
+            display="flex"
+            direction="row"
+            width="100%"
+            alignItems="center"
+          >
+            <Text fontSize={15} fontWeight="medium" color="#fff">
+              Montant disponible le 4eme mois : {tbioBalance / 5}
+            </Text>
+            <Image
+              src="https://terrabiodao.org/logo/tbio-logo.svg"
+              ml="10px"
+              boxSize="30px"
+              objectFit="cover"
+              alt="TBIO"
+            />
           </Box>
-          <Box display="flex" flexDirection="row" alignItems="center">
-            <Box>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                Phase 5
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                XX/XX/XXXX
-              </Text>
-              <Text fontSize={20} fontWeight="medium" color="#fff">
-                {tbioBalance / 5} 20% du balance
-              </Text>
-            </Box>
+
+          <Divider orientation="horizontal" mt="10px" mb="10px" />
+
+          <Box
+            borderRadius="30"
+            bg="rgba(79,79,79,0.38)"
+            p="20px"
+            display="flex"
+            direction="row"
+            width="100%"
+            alignItems="center"
+          >
+            <Text fontSize={15} fontWeight="medium" color="#fff">
+              Montant disponible le 5eme mois : {tbioBalance / 5}
+            </Text>
+            <Image
+              src="https://terrabiodao.org/logo/tbio-logo.svg"
+              ml="10px"
+              boxSize="30px"
+              objectFit="cover"
+              alt="TBIO"
+            />
           </Box>
         </Flex>
       </Flex>
