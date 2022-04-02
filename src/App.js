@@ -5,6 +5,7 @@ import { useContext } from "react";
 import {
   Flex,
   Box,
+  Image,
   Text,
   Progress,
   NumberInput,
@@ -152,7 +153,7 @@ const App = () => {
           Ca y est ? tu es prêt ?
         </Text>
         <Text fontSize={16} fontWeight="medium" color="#fff">
-          Pour devenir un Terranaute, indique la montant que tu souhaites
+          Pour devenir un Terranaute, indique le montant que tu souhaites
           investir et valide ta transaction sur Metamask !
         </Text>
         <Text fontSize={16} fontWeight="extrabold" color="#fff">
@@ -264,11 +265,15 @@ const App = () => {
             mb="20px"
             justifyItems="center"
           >
-            <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
-            <Text fontSize={20} fontWeight="medium" color="teal">
-              Balance : {usdcBalance}
-              Balance : {usdtBalance}
+
+            <Text fontSize={20} fontWeight="medium" color="teal" pr='10px'>
+              Balance USDC : {usdcBalance}
             </Text>
+            <Image src='https://terrabiodao.org/logo/usd-coin-usdc-logo.svg' boxSize="30px" objectFit='cover' alt='USDC' />
+            <Text fontSize={20} fontWeight="medium" color="teal" pl='20px' pr='10px'>
+              Balance USDT : {usdtBalance}
+            </Text>
+            <Image src='https://terrabiodao.org/logo/tether-usdt-logo.svg' boxSize="30px" objectFit='cover' alt='USDT' />
           </Box>
           <Box
             display="flex"
@@ -281,10 +286,11 @@ const App = () => {
             p="20px"
             justifyItems="center"
           >
-            <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
-            <Text fontSize={20} fontWeight="medium" color="teal">
+            <Text fontSize={20} fontWeight="medium" color="teal" mr='15px'>
               Monstant investi : {userInvestBalance}
             </Text>
+            <Image src='https://terrabiodao.org/logo/usd-coin-usdc-logo.svg' boxSize="30px" objectFit='cover' alt='USDC' />
+            <Image src='https://terrabiodao.org/logo/tether-usdt-logo.svg' boxSize="30px" objectFit='cover' alt='USDT' />
           </Box>
         </Flex>
       </Flex>
@@ -357,7 +363,6 @@ const App = () => {
           direction={width <= 950 ? "column" : "row"}
         >
           <Box display="flex" flexDirection="row" alignItems="center">
-            <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
             <Box>
               <Text fontSize={20} fontWeight="medium" color="#fff">
                 Phase 1
@@ -366,12 +371,11 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-              {(tbioBalance/5)} 20% du balance
+                {(tbioBalance / 5)} 20% du balance
               </Text>
             </Box>
           </Box>
           <Box display="flex" flexDirection="row" alignItems="center">
-            <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
             <Box>
               <Text fontSize={20} fontWeight="medium" color="#fff">
                 Phase 2
@@ -380,12 +384,11 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-              {(tbioBalance/5)} 20% du balance
+                {(tbioBalance / 5)} 20% du balance
               </Text>
             </Box>
           </Box>
           <Box display="flex" flexDirection="row" alignItems="center">
-            <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
             <Box>
               <Text fontSize={20} fontWeight="medium" color="#fff">
                 Phase 3
@@ -394,12 +397,11 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-               {(tbioBalance/5)} 20% du balance
+                {(tbioBalance / 5)} 20% du balance
               </Text>
             </Box>
           </Box>
           <Box display="flex" flexDirection="row" alignItems="center">
-            <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
             <Box>
               <Text fontSize={20} fontWeight="medium" color="#fff">
                 Phase 4
@@ -408,12 +410,11 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-              {(tbioBalance/5)} 20% du balance
+                {(tbioBalance / 5)} 20% du balance
               </Text>
             </Box>
           </Box>
           <Box display="flex" flexDirection="row" alignItems="center">
-            <StarIcon boxSize={10} w={10} h={10} color="#ffd000" mr="15px" />
             <Box>
               <Text fontSize={20} fontWeight="medium" color="#fff">
                 Phase 5
@@ -422,7 +423,7 @@ const App = () => {
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-              {(tbioBalance/5)} 20% du balance
+                {(tbioBalance / 5)} 20% du balance
               </Text>
             </Box>
           </Box>
