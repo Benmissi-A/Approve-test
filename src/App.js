@@ -32,7 +32,8 @@ import {
 import { StarIcon } from "@chakra-ui/icons";
 
 const App = () => {
-  const { connectWallet,
+  const {
+    connectWallet,
     defaultAccount,
     userBalance,
     usdcBalance,
@@ -48,77 +49,73 @@ const App = () => {
     permission,
     withdraw,
     registerToWhitelist,
-    banFromWhiteList } =
-    useContext(MetamaskContext);
+    banFromWhiteList,
+  } = useContext(MetamaskContext);
 
   // const [userBalance, setUserbalance] = useState(null);
 
   const [approveTx, setApproveTx] = useState(false);
   const [currency, setCurrency] = useState(null);
-  const [ammount, setAmmount] = useState(null);
 
   const [width, setWidth] = useState(0);
   const [value, setValue] = React.useState(0);
-  const handleChange = (value) => setValue(value);
+  const handleChangeValue = (value) => setValue(value);
   const handleResize = () => {
     setWidth(window.innerWidth);
-    console.log('largeur ecran', width);
+    console.log("largeur ecran", width);
   };
   useEffect(() => {
     handleResize();
   });
   window.addEventListener("resize", handleResize);
 
- const handleCurrencyChange = (e) =>{
-  setCurrency(e.target.value)
-}
-const handleChangeAmount = (e) => {
-  console.log("e.target.value", e.target.value)
-  setAmmount(e.target.value)
-}
-useEffect(()=>{
-  console.log('currency', currency)
-},[currency])
-useEffect(()=>{
-  console.log('ammount', ammount)
-},[ammount])
+  const handleCurrencyChange = (e) => {
+    setCurrency(e.target.value);
+  };
+
+  useEffect(() => {
+    console.log("currency", currency);
+  }, [currency]);
+  useEffect(() => {
+    console.log("value", value);
+    console.log("value", value * 10 ** 6);
+  }, [value]);
 
   // smartContracts functions
   const handleClickBuy = async () => {
-    console.log("handleClickBuy");
     try {
-      await deposit(10000000, 1).then(() => {
+      let tmp = value * 10 ** 6;
+      await deposit(tmp, 0).then(() => {
         setApproveTx(false);
-        console.log("handleClickBuy After");
       });
     } catch (e) {
-      console.log("handleClickBuy", e.message);
+      console.log("handleClickBuy error", e.message);
     }
   };
   const handleClickApprove = async () => {
-    console.log("handleClickBuy");
     try {
-      await approve(10000000, 1).then(() => {
-        setApproveTx(true);
-        console.log("handleClickBuy After");
-      });
+      let tmp = value * 10 ** 6;
+      await approve(tmp, 0);
+      setApproveTx(true);
+      console.log("value: ", value * 10 ** 6);
+      console.log("currency: ", currency);
     } catch (e) {
-      console.log("handleClickBuy", e.message);
-    }  
-
+      console.log("handleClickApprove error", e.message);
+      console.log("erro value: ", value * 10 ** 6);
+      console.log("erro currency: ", currency);
+    }
   };
-    const handleClickRegisterToWhitelist = async (address) => {
-      console.log("handleClickRegisterToWhitelist");
-      try {
-        await registerToWhitelist(address).then(() => {
-          setApproveTx(true);
-          console.log("handleClickRegisterToWhitelist After");
-        });
-      } catch (e) {
-        console.log("handleClickRegisterToWhitelist", e.message);
-      }
-  };
-
+  // const handleClickRegisterToWhitelist = async (address) => {
+  //   console.log("handleClickRegisterToWhitelist");
+  //   try {
+  //     await registerToWhitelist(address).then(() => {
+  //       setApproveTx(true);
+  //       console.log("handleClickRegisterToWhitelist After");
+  //     });
+  //   } catch (e) {
+  //     console.log("handleClickRegisterToWhitelist", e.message);
+  //   }
+  // };
 
   return (
     <>
@@ -128,16 +125,16 @@ useEffect(()=>{
           <button onClick={handleClickApprove}>Click to approve</button>
         ) : (
           <button onClick={handleClickBuy}>Click to buy</button>
-          )}
-          <p>UsdcBalance = {usdcBalance}</p>
-          <p>userBalance = {userBalance}</p>
-          <p>usdcAllowance = {usdcAllowance}</p>
-          <p>usdtAllowance = {usdtAllowance}</p>
-          <p>totalInvest = {totalInvest}</p>
-          <button onClick={permission}>Click to permission</button>
-          {/*  <button onClick={handleClickRegisterToWhitelist(defaultAccount)}>Click to registerToWhitelist</button>
-         <button onClick={withdraw}>Click to withdraw</button> */}
-          <button onClick={banFromWhiteList}>Click to banFromWhiteList</button>
+        )}
+        <p>UsdcBalance = {usdcBalance}</p>
+        <p>userBalance = {userBalance}</p>
+        <p>usdcAllowance = {usdcAllowance}</p>
+        <p>usdtAllowance = {usdtAllowance}</p>
+        <p>totalInvest = {totalInvest}</p>
+        {/*  <button onClick={permission}>Click to permission</button>
+      <button onClick={handleClickRegisterToWhitelist(defaultAccount)}>Click to registerToWhitelist</button>
+         <button onClick={withdraw}>Click to withdraw</button> 
+        <button onClick={banFromWhiteList}>Click to banFromWhiteList</button>*/}
       </div>
       <Box p="20px" bg="rgba(79,79,79,0.38)" borderRadius="30" m="20px">
         <Text fontSize={22} fontWeight="extrabold" color="#fff">
@@ -226,7 +223,10 @@ useEffect(()=>{
             >
               Choisissez votre devise :
             </Text>
-            <Select onChange={handleCurrencyChange} placeholder="Select a stable coin">
+            <Select
+              onChange={handleCurrencyChange}
+              placeholder="Select a stable coin"
+            >
               <option value={0}>USDC</option>
               <option value={1}>USDT</option>
             </Select>
@@ -237,11 +237,8 @@ useEffect(()=>{
               mr="2rem"
               value={value}
               min={10}
-              max={(50000 - userInvestBalance)}
-              onChange={
-                handleChange 
-             }
-              
+              max={50000 - userInvestBalance}
+              onChange={handleChangeValue}
             >
               <NumberInputField />
               <NumberInputStepper>
@@ -253,9 +250,9 @@ useEffect(()=>{
               flex="1"
               focusThumbOnChange={false}
               value={value}
-              onChange={handleChange}
+              onChange={handleChangeValue}
               min={10}
-              max={(50000 - userInvestBalance)}
+              max={50000 - userInvestBalance}
               colorScheme="teal"
             >
               <SliderTrack>
@@ -284,15 +281,30 @@ useEffect(()=>{
             mb="20px"
             justifyItems="center"
           >
-
-            <Text fontSize={20} fontWeight="medium" color="teal" pr='10px'>
+            <Text fontSize={20} fontWeight="medium" color="teal" pr="10px">
               Balance USDC : {usdcBalance}
             </Text>
-            <Image src='https://terrabiodao.org/logo/usd-coin-usdc-logo.svg' boxSize="30px" objectFit='cover' alt='USDC' />
-            <Text fontSize={20} fontWeight="medium" color="teal" pl='20px' pr='10px'>
+            <Image
+              src="https://terrabiodao.org/logo/usd-coin-usdc-logo.svg"
+              boxSize="30px"
+              objectFit="cover"
+              alt="USDC"
+            />
+            <Text
+              fontSize={20}
+              fontWeight="medium"
+              color="teal"
+              pl="20px"
+              pr="10px"
+            >
               Balance USDT : {usdtBalance}
             </Text>
-            <Image src='https://terrabiodao.org/logo/tether-usdt-logo.svg' boxSize="30px" objectFit='cover' alt='USDT' />
+            <Image
+              src="https://terrabiodao.org/logo/tether-usdt-logo.svg"
+              boxSize="30px"
+              objectFit="cover"
+              alt="USDT"
+            />
           </Box>
           <Box
             display="flex"
@@ -305,11 +317,21 @@ useEffect(()=>{
             p="20px"
             justifyItems="center"
           >
-            <Text fontSize={20} fontWeight="medium" color="teal" mr='15px'>
+            <Text fontSize={20} fontWeight="medium" color="teal" mr="15px">
               Monstant investi : {userInvestBalance}
             </Text>
-            <Image src='https://terrabiodao.org/logo/usd-coin-usdc-logo.svg' boxSize="30px" objectFit='cover' alt='USDC' />
-            <Image src='https://terrabiodao.org/logo/tether-usdt-logo.svg' boxSize="30px" objectFit='cover' alt='USDT' />
+            <Image
+              src="https://terrabiodao.org/logo/usd-coin-usdc-logo.svg"
+              boxSize="30px"
+              objectFit="cover"
+              alt="USDC"
+            />
+            <Image
+              src="https://terrabiodao.org/logo/tether-usdt-logo.svg"
+              boxSize="30px"
+              objectFit="cover"
+              alt="USDT"
+            />
           </Box>
         </Flex>
       </Flex>
@@ -390,7 +412,7 @@ useEffect(()=>{
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                {(tbioBalance / 5)} 20% du balance
+                {tbioBalance / 5} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -403,7 +425,7 @@ useEffect(()=>{
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                {(tbioBalance / 5)} 20% du balance
+                {tbioBalance / 5} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -416,7 +438,7 @@ useEffect(()=>{
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                {(tbioBalance / 5)} 20% du balance
+                {tbioBalance / 5} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -429,7 +451,7 @@ useEffect(()=>{
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                {(tbioBalance / 5)} 20% du balance
+                {tbioBalance / 5} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -442,7 +464,7 @@ useEffect(()=>{
                 XX/XX/XXXX
               </Text>
               <Text fontSize={20} fontWeight="medium" color="#fff">
-                {(tbioBalance / 5)} 20% du balance
+                {tbioBalance / 5} 20% du balance
               </Text>
             </Box>
           </Box>
@@ -453,4 +475,3 @@ useEffect(()=>{
 };
 
 export default App;
-

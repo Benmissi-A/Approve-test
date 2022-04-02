@@ -1,7 +1,7 @@
 import { createContext, useEffect, useState } from "react";
 import { ethers } from "ethers";
-import { UsdtAddress, UsdtAbi } from "../contracts/Usdt";
 import { UsdcAddress, UsdcAbi } from "../contracts/Usdc";
+import { UsdtAddress, UsdtAbi } from "../contracts/Usdt";
 import {
   TerrabioDAOPresaleAddress,
   TerrabioDAOPresaleAbi,
@@ -134,6 +134,7 @@ export const MetamaskContextProvider = ({ children }) => {
   useEffect(() => {
     if (defaultAccount && usdcContract && usdtContract && presaleContract) {
       console.log("defaultAccount: ", defaultAccount);
+      
       balanceOfUsdc(defaultAccount);
       console.log("usdc: ", usdcBalance);
       balanceOfUsdt(defaultAccount);
