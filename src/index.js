@@ -4,12 +4,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MetamaskContextProvider } from "./hook/connectMetamask";
 //import { ContractContextProvider } from "./hook/connectContract";
+import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.render(
   <React.StrictMode>
     <MetamaskContextProvider>
+      <ChakraProvider>
         <App />
-   </MetamaskContextProvider> 
+      </ChakraProvider>
+    </MetamaskContextProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

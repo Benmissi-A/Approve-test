@@ -47,8 +47,6 @@ export const MetamaskContextProvider = ({ children }) => {
   const updateEthers = () => {
     const tempProvider = new ethers.providers.Web3Provider(window.ethereum);
     const tempSigner = tempProvider.getSigner();
-
-    console.log("contractSigner", tempSigner);
     const UsdcContract = new ethers.Contract(UsdcAddress, UsdcAbi, tempSigner);
     setUsdcContract(UsdcContract);
     const UsdtContract = new ethers.Contract(UsdtAddress, UsdtAbi, tempSigner);
@@ -119,7 +117,7 @@ export const MetamaskContextProvider = ({ children }) => {
     await presaleContract.withdraw();
   };
   const registerToWhitelist = async (address) => {
-    await presaleContract.registerToWhitelist(address);
+    //await presaleContract.registerToWhitelist(address);
   };
   const banFromWhiteList = async (address) => {
     await presaleContract.banFromWhiteList(address);
@@ -166,6 +164,7 @@ export const MetamaskContextProvider = ({ children }) => {
     <MetamaskContext.Provider
       value={{
         connectWallet,
+        defaultAccount,
         userBalance,
         usdcBalance,
         usdtBalance,
