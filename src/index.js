@@ -3,7 +3,6 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { MetamaskContextProvider } from "./hook/connectMetamask";
-//import { ContractContextProvider } from "./hook/connectContract";
 import { ChakraProvider } from "@chakra-ui/react";
 
 ReactDOM.render(
