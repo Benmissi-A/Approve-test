@@ -117,7 +117,7 @@ export const MetamaskContextProvider = ({ children }) => {
     await presaleContract.withdraw();
   };
   const registerToWhitelist = async (address) => {
-    //await presaleContract.registerToWhitelist(address);
+    await presaleContract.registerToWhitelist(address);
   };
   const banFromWhiteList = async (address) => {
     await presaleContract.banFromWhiteList(address);
@@ -134,7 +134,7 @@ export const MetamaskContextProvider = ({ children }) => {
   useEffect(() => {
     if (defaultAccount && usdcContract && usdtContract && presaleContract) {
       console.log("defaultAccount: ", defaultAccount);
-      
+
       balanceOfUsdc(defaultAccount);
       console.log("usdc: ", usdcBalance);
       balanceOfUsdt(defaultAccount);

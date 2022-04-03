@@ -1,4 +1,4 @@
-export const TerrabioDAOPresaleAddress = "0xfa4d37DA0C27ff2452FeD307eBa458d2AF783C17";
+export const TerrabioDAOPresaleAddress = "0xcBe0F053FADf7C494DBAa02F2e38718dCFfFbAbC";
  
 export const TerrabioDAOPresaleAbi = [
 	{
@@ -36,6 +36,63 @@ export const TerrabioDAOPresaleAbi = [
 		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "sender",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "Deposited",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "whitelisted",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"name": "Permited",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "address",
+				"name": "whitelisted",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "status",
+				"type": "bool"
+			}
+		],
+		"name": "Registered",
+		"type": "event"
 	},
 	{
 		"anonymous": false,
@@ -113,23 +170,29 @@ export const TerrabioDAOPresaleAbi = [
 		"type": "event"
 	},
 	{
+		"anonymous": false,
 		"inputs": [
 			{
+				"indexed": true,
 				"internalType": "address",
-				"name": "userAddress_",
+				"name": "recipient",
 				"type": "address"
-			}
-		],
-		"name": "BanFromWhiteList",
-		"outputs": [
+			},
 			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "usdc",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "usdt",
+				"type": "uint256"
 			}
 		],
-		"stateMutability": "nonpayable",
-		"type": "function"
+		"name": "Withdrew",
+		"type": "event"
 	},
 	{
 		"inputs": [],
@@ -168,6 +231,25 @@ export const TerrabioDAOPresaleAbi = [
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress_",
+				"type": "address"
+			}
+		],
+		"name": "banFromWhiteList",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
