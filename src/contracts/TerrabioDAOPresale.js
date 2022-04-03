@@ -1,4 +1,4 @@
-export const TerrabioDAOPresaleAddress = "0xcBe0F053FADf7C494DBAa02F2e38718dCFfFbAbC";
+export const TerrabioDAOPresaleAddress = "0xC6d8337e3689C589E7dbB769C054C9c710277c43";
  
 export const TerrabioDAOPresaleAbi = [
 	{
@@ -242,13 +242,7 @@ export const TerrabioDAOPresaleAbi = [
 			}
 		],
 		"name": "banFromWhiteList",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -266,13 +260,14 @@ export const TerrabioDAOPresaleAbi = [
 			}
 		],
 		"name": "buyTbio",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "closePresale",
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -437,6 +432,19 @@ export const TerrabioDAOPresaleAbi = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "presaleIsOpen",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -445,13 +453,7 @@ export const TerrabioDAOPresaleAbi = [
 			}
 		],
 		"name": "registerToWhitelist",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	},
@@ -571,13 +573,7 @@ export const TerrabioDAOPresaleAbi = [
 	{
 		"inputs": [],
 		"name": "withdraw",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
+		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
 	}
