@@ -47,11 +47,11 @@ const App = () => {
     withdraw,
     registerToWhitelist,
     banFromWhiteList,
+    approveTx
   } = useContext(MetamaskContext);
 
   // const [userBalance, setUserbalance] = useState(null);
 
-  const [approveTx, setApproveTx] = useState(false);
   const [currency, setCurrency] = useState('x');
 
   const [width, setWidth] = useState(0);
@@ -81,7 +81,6 @@ const App = () => {
     try {
       let tmp = value * 10 ** 6;
       await deposit(tmp, currency).then(() => {
-        setApproveTx(false);
       });
     } catch (e) {
       console.log("handleClickBuy error", e.message);
@@ -91,7 +90,7 @@ const App = () => {
     try {
       let tmp = value * 10 ** 6;
       await approve(tmp, currency);
-      setApproveTx(true);
+  
       console.log("value: ", value * 10 ** 6);
       console.log("currency: ", currency);
     } catch (e) {
@@ -99,6 +98,7 @@ const App = () => {
       console.log("erro value: ", value * 10 ** 6);
       console.log("erro currency: ", currency);
     }
+
   };
 
   
@@ -108,7 +108,6 @@ const App = () => {
     console.log("handleClickRegisterToWhitelist");
     try {
       await registerToWhitelist(0x5Bf3d6D785Ce543AcA6c8A328Fb0EA41001c08F7).then(() => {
-        setApproveTx(true);
         console.log("handleClickRegisterToWhitelist After");
       });
     } catch (e) {
