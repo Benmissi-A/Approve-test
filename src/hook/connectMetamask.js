@@ -73,12 +73,12 @@ export const MetamaskContextProvider = ({ children }) => {
   const balanceOfUsdc = async (address) => {
     const tx = await usdcContract.balanceOf(address);
     setUsdcBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
-    console.log("tx Usdc", tx);
+   
   };
   const balanceOfUsdt = async (address) => {
     const tx = await usdtContract.balanceOf(address);
     setUsdtBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
-    console.log("tx Usdt", tx);
+    
   };
   const allowanceUsdc = async (address) => {
     const tx = await usdcContract.allowance(address, TerrabioDAOPresaleAddress);
@@ -132,33 +132,33 @@ export const MetamaskContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (defaultAccount && usdcContract && usdtContract && presaleContract) {
-      console.log("defaultAccount: ", defaultAccount);
+    if (window.ethereum, defaultAccount && usdcContract && usdtContract && presaleContract) {
+    //  console.log("defaultAccount: ", defaultAccount);
 
       balanceOfUsdc(defaultAccount);
-      console.log("usdc: ", usdcBalance);
+   //   console.log("usdc: ", usdcBalance);
       balanceOfUsdt(defaultAccount);
-      console.log("usdt: ", usdtBalance);
+   //   console.log("usdt: ", usdtBalance);
 
       allowanceUsdc(defaultAccount);
-      console.log("usdcAllowance: ", usdcAllowance);
+    //  console.log("usdcAllowance: ", usdcAllowance);
       allowanceUsdt(defaultAccount);
-      console.log("usdtAllowance: ", usdtAllowance);
+     // console.log("usdtAllowance: ", usdtAllowance);
 
       getTbioBalance(defaultAccount);
-      console.log("tbioBalance: ", tbioBalance);
+    //  console.log("tbioBalance: ", tbioBalance);
 
       getTotalInvest();
-      console.log("totalInvest: ", totalInvest);
+    //  console.log("totalInvest: ", totalInvest);
 
       getTotalSupply();
-      console.log("totalSupply: ", totalSupply);
+    //  console.log("totalSupply: ", totalSupply);
       getUserInvestBalance(defaultAccount);
      
-      console.log("userInvestBalance: ", userInvestBalance);
-      console.log("error", errorMessage);
+     // console.log("userInvestBalance: ", userInvestBalance);
+     // console.log("error", errorMessage);
       //   console.log("finish");
-    }
+    }else{console.log("await connection")}
   });
 
   return (
