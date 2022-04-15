@@ -47,12 +47,12 @@ const App = () => {
     withdraw,
     registerToWhitelist,
     banFromWhiteList,
-    approveTx
+    approveTx,
   } = useContext(MetamaskContext);
 
   // const [userBalance, setUserbalance] = useState(null);
 
-  const [currency, setCurrency] = useState('x');
+  const [currency, setCurrency] = useState("x");
 
   const [width, setWidth] = useState(0);
   const [value, setValue] = useState(0);
@@ -80,8 +80,7 @@ const App = () => {
   const handleClickBuy = async () => {
     try {
       let tmp = value * 10 ** 6;
-      await deposit(tmp, currency).then(() => {
-      });
+      await deposit(tmp, currency).then(() => {});
     } catch (e) {
       console.log("handleClickBuy error", e.message);
     }
@@ -90,7 +89,7 @@ const App = () => {
     try {
       let tmp = value * 10 ** 6;
       await approve(tmp, currency);
-  
+
       console.log("value: ", value * 10 ** 6);
       console.log("currency: ", currency);
     } catch (e) {
@@ -98,16 +97,14 @@ const App = () => {
       console.log("erro value: ", value * 10 ** 6);
       console.log("erro currency: ", currency);
     }
-
   };
-
-  
- 
 
   const handleClickRegisterToWhitelist = async (address) => {
     console.log("handleClickRegisterToWhitelist");
     try {
-      await registerToWhitelist(0x5Bf3d6D785Ce543AcA6c8A328Fb0EA41001c08F7).then(() => {
+      await registerToWhitelist(
+        0x5bf3d6d785ce543aca6c8a328fb0ea41001c08f7
+      ).then(() => {
         console.log("handleClickRegisterToWhitelist After");
       });
     } catch (e) {
@@ -115,17 +112,17 @@ const App = () => {
     }
   };
 
-//   const registerPeopleToWhiteList = () => {
-//     let txt = `
-//     0x5Bf3d6D785Ce543AcA6c8A328Fb0EA41001c08F7
-// `.split(`\n`)
-//     txt.map(async e =>{ 
-//       console.log(e)
-//       await registerToWhitelist(e)
-//       console.log(e)
-//     })
-//     return txt
-//   }
+  //   const registerPeopleToWhiteList = () => {
+  //     let txt = `
+  //     0x5Bf3d6D785Ce543AcA6c8A328Fb0EA41001c08F7
+  // `.split(`\n`)
+  //     txt.map(async e =>{
+  //       console.log(e)
+  //       await registerToWhitelist(e)
+  //       console.log(e)
+  //     })
+  //     return txt
+  //   }
 
   return (
     <>
@@ -145,7 +142,7 @@ const App = () => {
         <p>usdtAllowance = {usdtAllowance}</p>
         <p>totalInvest = {totalInvest}</p>
         <button onClick={permission}>Click to permission</button>
-    {/*    <button onClick={handleClickRegisterToWhitelist}>Click to registerToWhitelist</button>
+        {/*    <button onClick={handleClickRegisterToWhitelist}>Click to registerToWhitelist</button>
            <button onClick={withdraw}>Click to withdraw</button> 
         <button onClick={banFromWhiteList}>Click to banFromWhiteList</button>
         <button onClick={registerPeopleToWhiteList}>Register people to withelist</button>*/}
@@ -395,9 +392,11 @@ const App = () => {
             mt="15px"
           >
             {!approveTx
-              ? ` currency === 0 && ${"Approuver du $ USDC"}
-                ${currency === 1 && "Approuver du $ USDT"}
-                ${currency == 'x' && "Choisissez un stable"}`         
+              ? currency === 0
+                ? "Approuver du $ USDC"
+                : currency === 1
+                ? "Approuver du $ USDT"
+                : currency == "x" && "Choisissez un stable"
               : "Acheter du $TBIO "}
           </Button>
         </Flex>
