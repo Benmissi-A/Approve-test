@@ -1,4 +1,4 @@
-export const UsdtAddress = "0x3795c36e7d12a8c252a20c5a7b455f7c57b60283";
+export const UsdtAddress = "0x3f815e7d299f08278c0308aE1048aa45ED12415f";
 export const UsdtAbi = [
   {
     type: "constructor",

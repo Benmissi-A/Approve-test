@@ -1,4 +1,4 @@
-export const TerrabioDAOPresaleAddress = "0xC6d8337e3689C589E7dbB769C054C9c710277c43";
+export const TerrabioDAOPresaleAddress = "0xc16e4205021B0cE371a4895467135FabB350A6fF";
  
 export const TerrabioDAOPresaleAbi = [
 	{
