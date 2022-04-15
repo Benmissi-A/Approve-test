@@ -19,13 +19,15 @@ import {
   Select,
   Divider,
   Link,
-  List,
   ListItem,
-  ListIcon,
   OrderedList,
-  UnorderedList,
-  Button,
+  Tag,
+  TagLabel,
+  TagRightIcon,
+  HStack,
+  Button
 } from "@chakra-ui/react";
+import { CheckIcon, LockIcon } from '@chakra-ui/icons';
 import { StarIcon } from "@chakra-ui/icons";
 
 const App = () => {
@@ -55,11 +57,11 @@ const App = () => {
   const [currency, setCurrency] = useState('x');
 
   const [width, setWidth] = useState(0);
-  const [value, setValue] = useState(0);
+  const [value, setValue] = useState(10);
   const handleChangeValue = (value) => setValue(value);
   const handleResize = () => {
     setWidth(window.innerWidth);
-    console.log("largeur ecran", width);
+    //console.log("largeur ecran", width);
   };
   useEffect(() => {
     handleResize();
@@ -68,6 +70,7 @@ const App = () => {
 
   const handleCurrencyChange = (e) => {
     setCurrency(Number(e.target.value));
+    console.log("handle", e.target.value)
   };
 
   useEffect(() => {
@@ -115,20 +118,6 @@ const App = () => {
     }
   };
 
-
-
-
-  //   const registerPeopleToWhiteList = () => {
-  //     let txt = `
-  //     0x5Bf3d6D785Ce543AcA6c8A328Fb0EA41001c08F7
-  // `.split(`\n`)
-  //     txt.map(async e =>{ 
-  //       console.log(e)
-  //       await registerToWhitelist(e)
-  //       console.log(e)
-  //     })
-  //     return txt
-  //   }
 
   return (
     <>
@@ -369,13 +358,20 @@ const App = () => {
             mt="20px"
             p="20px"
             w="100%"
+            //alignItems="center"
           >
-            <Button onClick={handleClickApprove} colorScheme='teal' variant='solid' w='100%' mb='15px'>
-              Approuver la transaction
+         
+
+            <Button onClick={!approveTx ? handleClickApprove : handleClickBuy } colorScheme='teal' variant='solid' w='100%'  disabled = {currency == "x"}>
+            {!approveTx
+              ? currency === 0
+                ? "Approuver la transaction en $ USDC"
+                : currency === 1
+                ? "Approuver la transaction en USDT"
+                : currency == "x" && "Choisissez un stable"
+              : "Acheter du $TBIO "}
             </Button>
-            <Button onClick={handleClickBuy} colorScheme='teal' variant='solid' w='100%'>
-              Acheter du $TBIO
-            </Button>
+        
           </Box>
 
         </Flex>
