@@ -26,6 +26,7 @@ export const MetamaskContextProvider = ({ children }) => {
   const [totalInvest, setTotalInvest] = useState(null);
   const [totalSupply, setTotaSupply] = useState(null);
   const [userInvestBalance, setUserInvestBalance] = useState(null);
+  const [approveTx, setApproveTx] = useState(false);
 
   const connectWallet = () => {
     if (window.ethereum) {
@@ -69,16 +70,39 @@ export const MetamaskContextProvider = ({ children }) => {
       console.log(e);
       setErrorMessage(e.data.message);
     }
+    checkApprove(nb,defaultAccount, TerrabioDAOPresaleAddress, amount)
   };
+  const checkApprove = async (nb, owner, spender, value) => {
+    nb === 0
+      ? await usdcContract.on("Approval", (owner, spender, value) => {
+          console.log('usdc Approval event')
+          console.log(owner, spender, value.toString())
+          setApproveTx(true)
+        })
+      : await usdtContract.on("Approval", (owner, spender, value) => {
+          console.log('usdc Approval event')
+          console.log(owner, spender, value.toString())
+          setApproveTx(true)
+        });
+        
+  };
+  const checkTransfer = async (sender, amount) => {
+      await presaleContract.on("Deposited", (sender, amount) => {
+        console.log('Deposited event')
+        console.log(sender, amount.toString())
+        setApproveTx(false)
+        presaleContract.off()
+        })
+      }
+
   const balanceOfUsdc = async (address) => {
     const tx = await usdcContract.balanceOf(address);
     setUsdcBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
-   
+ 
   };
   const balanceOfUsdt = async (address) => {
     const tx = await usdtContract.balanceOf(address);
     setUsdtBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
-    
   };
   const allowanceUsdc = async (address) => {
     const tx = await usdcContract.allowance(address, TerrabioDAOPresaleAddress);
@@ -108,6 +132,7 @@ export const MetamaskContextProvider = ({ children }) => {
   };
   const deposit = async (amount, nb) => {
     await presaleContract.buyTbio(amount, nb);
+    checkTransfer(defaultAccount, amount)
   };
 
   const permission = async () => {
@@ -130,35 +155,49 @@ export const MetamaskContextProvider = ({ children }) => {
         setUserbalance(ethers.utils.formatEther(balance));
       });
   };
+  const checkBlock = async () => {
+    presaleContract
+    ?
+    await presaleContract.on("blockNumber", (blockNumber) => {
+      //presaleContract.off()
+      console.log(blockNumber)
+    })
+    : console.log('connect your wallet')
+
+  }
+  // useEffect(() => {
+  //   checkBlock()
+    
+  // })
 
   useEffect(() => {
-    if (window.ethereum, defaultAccount && usdcContract && usdtContract && presaleContract) {
-    //  console.log("defaultAccount: ", defaultAccount);
+    if (window.ethereum && defaultAccount && usdcContract && usdtContract && presaleContract) {
+      // console.log("defaultAccount: ", defaultAccount);
 
       balanceOfUsdc(defaultAccount);
-   //   console.log("usdc: ", usdcBalance);
+      // console.log("usdc: ", usdcBalance);
       balanceOfUsdt(defaultAccount);
-   //   console.log("usdt: ", usdtBalance);
+      // console.log("usdt: ", usdtBalance);
 
       allowanceUsdc(defaultAccount);
-    //  console.log("usdcAllowance: ", usdcAllowance);
+      // console.log("usdcAllowance: ", usdcAllowance);
       allowanceUsdt(defaultAccount);
-     // console.log("usdtAllowance: ", usdtAllowance);
+      // console.log("usdtAllowance: ", usdtAllowance);
 
       getTbioBalance(defaultAccount);
-    //  console.log("tbioBalance: ", tbioBalance);
+      // console.log("tbioBalance: ", tbioBalance);
 
       getTotalInvest();
-    //  console.log("totalInvest: ", totalInvest);
+      // console.log("totalInvest: ", totalInvest);
 
       getTotalSupply();
-    //  console.log("totalSupply: ", totalSupply);
+      // console.log("totalSupply: ", totalSupply);
       getUserInvestBalance(defaultAccount);
-     
-     // console.log("userInvestBalance: ", userInvestBalance);
-     // console.log("error", errorMessage);
-      //   console.log("finish");
-    }else{console.log("await connection")}
+
+      // console.log("userInvestBalance: ", userInvestBalance);
+      // console.log("error", errorMessage);
+        console.log("connected");
+    }else{console.log("not connected")}
   });
 
   return (
@@ -182,6 +221,7 @@ export const MetamaskContextProvider = ({ children }) => {
         registerToWhitelist,
         banFromWhiteList,
         allowanceUsdt,
+        approveTx
       }}
     >
       {children}
