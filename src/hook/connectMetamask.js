@@ -80,7 +80,7 @@ export const MetamaskContextProvider = ({ children }) => {
           setApproveTx(true)
         })
       : await usdtContract.on("Approval", (owner, spender, value) => {
-          console.log('usdc Approval event')
+          console.log('usdt Approval event')
           console.log(owner, spender, value.toString())
           setApproveTx(true)
         });
@@ -91,7 +91,6 @@ export const MetamaskContextProvider = ({ children }) => {
         console.log('Deposited event')
         console.log(sender, amount.toString())
         setApproveTx(false)
-        presaleContract.off()
         })
       }
 
