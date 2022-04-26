@@ -49,7 +49,8 @@ const App = () => {
     withdraw,
     registerToWhitelist,
     banFromWhiteList,
-    approveTx
+    approveTx,
+    loading
   } = useContext(MetamaskContext);
 
   // const [userBalance, setUserbalance] = useState(null);
@@ -370,6 +371,7 @@ const App = () => {
                 ? "Approuver la transaction en USDT"
                 : currency == "x" && "Choisissez un stable"
               : "Acheter du $TBIO "}
+              {loading && " loading ..."}
             </Button>
         
           </Box>

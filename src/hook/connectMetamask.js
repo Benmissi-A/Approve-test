@@ -15,6 +15,7 @@ export const MetamaskContextProvider = ({ children }) => {
   const [userBalance, setUserbalance] = useState(null);
   //const [connectButtonText, setConnectButtonText] = useState(null)
   //const [signer, setSigner] = useState(null);
+  const [loading, setLoading] = useState(false)
   const [usdcContract, setUsdcContract] = useState(null);
   const [usdtContract, setUsdtContract] = useState(null);
   const [presaleContract, setPresaleContract] = useState(null);
@@ -70,6 +71,8 @@ export const MetamaskContextProvider = ({ children }) => {
       console.log(e);
       setErrorMessage(e.data.message);
     }
+    console.log('coucou')
+    setLoading(true)
     checkApprove(nb,defaultAccount, TerrabioDAOPresaleAddress, amount)
   };
   const checkApprove = async (nb, owner, spender, value) => {
@@ -78,11 +81,13 @@ export const MetamaskContextProvider = ({ children }) => {
           console.log('usdc Approval event')
           console.log(owner, spender, value.toString())
           setApproveTx(true)
+          setLoading(false)
         })
       : await usdtContract.on("Approval", (owner, spender, value) => {
           console.log('usdt Approval event')
           console.log(owner, spender, value.toString())
           setApproveTx(true)
+          setLoading(false)
         });
         
   };
@@ -90,6 +95,7 @@ export const MetamaskContextProvider = ({ children }) => {
       await presaleContract.on("Deposited", (sender, amount) => {
         console.log('Deposited event')
         console.log(sender, amount.toString())
+        setLoading(false)
         setApproveTx(false)
         })
       }
@@ -131,6 +137,7 @@ export const MetamaskContextProvider = ({ children }) => {
   };
   const deposit = async (amount, nb) => {
     await presaleContract.buyTbio(amount, nb);
+    setLoading(true)
     checkTransfer(defaultAccount, amount)
   };
 
@@ -220,7 +227,8 @@ export const MetamaskContextProvider = ({ children }) => {
         registerToWhitelist,
         banFromWhiteList,
         allowanceUsdt,
-        approveTx
+        approveTx,
+        loading
       }}
     >
       {children}
