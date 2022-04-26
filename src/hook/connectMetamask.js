@@ -63,6 +63,7 @@ export const MetamaskContextProvider = ({ children }) => {
 
   // USD FUNCTIONS
   const approve = async (amount, nb) => {
+    setLoading(true)
     try {
       nb === 0
         ? await usdcContract.approve(TerrabioDAOPresaleAddress, amount)
@@ -72,7 +73,6 @@ export const MetamaskContextProvider = ({ children }) => {
       setErrorMessage(e.data.message);
     }
     console.log('coucou')
-    setLoading(true)
     checkApprove(nb,defaultAccount, TerrabioDAOPresaleAddress, amount)
   };
   const checkApprove = async (nb, owner, spender, value) => {
@@ -136,8 +136,8 @@ export const MetamaskContextProvider = ({ children }) => {
     setTotalInvest(Number(ethers.utils.formatUnits(tx.toString(), 6)));
   };
   const deposit = async (amount, nb) => {
-    await presaleContract.buyTbio(amount, nb);
     setLoading(true)
+    await presaleContract.buyTbio(amount, nb);
     checkTransfer(defaultAccount, amount)
   };
 
