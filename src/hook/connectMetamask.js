@@ -28,6 +28,7 @@ export const MetamaskContextProvider = ({ children }) => {
   const [totalSupply, setTotaSupply] = useState(null);
   const [userInvestBalance, setUserInvestBalance] = useState(null);
   const [approveTx, setApproveTx] = useState(false);
+  const [maxCap, setMaxCap] = useState(0)
 
   const connectWallet = () => {
     if (window.ethereum) {
@@ -130,6 +131,7 @@ export const MetamaskContextProvider = ({ children }) => {
   const getUserInvestBalance = async (address) => {
     const tx = await presaleContract.getUserInvestBalance(address);
     setUserInvestBalance(Number(ethers.utils.formatUnits(tx.toString(), 6)));
+    userInvestBalance < 50000 && setMaxCap(50000 - userInvestBalance)
   };
   const getTotalInvest = async () => {
     const tx = await presaleContract.totalInvest();
@@ -228,7 +230,8 @@ export const MetamaskContextProvider = ({ children }) => {
         banFromWhiteList,
         allowanceUsdt,
         approveTx,
-        loading
+        loading,
+        maxCap
       }}
     >
       {children}

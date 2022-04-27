@@ -50,7 +50,8 @@ const App = () => {
     registerToWhitelist,
     banFromWhiteList,
     approveTx,
-    loading
+    loading,
+    maxCap
   } = useContext(MetamaskContext);
 
   // const [userBalance, setUserbalance] = useState(null);
@@ -317,7 +318,7 @@ const App = () => {
               mr="2rem"
               value={value}
               min={10}
-              max={(50000 - userInvestBalance)}
+              max={maxCap}
               onChange={
                 handleChangeValue
               }
@@ -335,7 +336,7 @@ const App = () => {
               value={value}
               onChange={handleChangeValue}
               min={10}
-              max={(50000 - userInvestBalance)}
+              max={maxCap}
               colorScheme="teal"
             >
               <SliderTrack>
